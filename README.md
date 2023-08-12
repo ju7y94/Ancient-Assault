@@ -1,1 +1,2 @@
 # Ancient-Assault
+is a project that demonstrates my expertise in 3D modeling, game programming, and a range of advanced techniques in the world of interactive entertainment. This project showcases my proficiency in essential skills such as 3D modeling, game programming, artificial intelligence implementation for enemies, object-oriented programming, game system management, audio integration, and animations.
