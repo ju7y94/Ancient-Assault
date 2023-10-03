@@ -184,22 +184,22 @@ public class TheGameManager : MonoBehaviour
                 {
                     tgm.silverM.color = new Color(silverM.color.r, silverM.color.g, silverM.color.b, 0.35f);
                 }
-                playerCurrentHealth = playerInstance.GetComponent<PlayerHealth>().GetCurrentHealth();
+                playerCurrentHealth = playerInstance.GetComponent<PlayerH>().GetCurrentHealth();
                 tgm.healthBar.fillAmount = playerCurrentHealth / 100f;
                 //bool momentum = playerInstance.GetComponent<PlayerWeapon>().GetMomentum();
                 tgm.ammoAmount.text = playerInstance.GetComponent<PlayerWeapon>().GetAmmunition().ToString();
 
-                bool bleeding = playerInstance.GetComponent<PlayerHealth>().GetPoisoned();
-                if (bleeding)
-                {
-                    tgm.bleedingImage.color = new Color(bleedingImage.color.r, bleedingImage.color.g, bleedingImage.color.b, 1f);
-                    tgm.bleedingText.gameObject.SetActive(true);
-                }
-                else if (!bleeding)
-                {
-                    tgm.bleedingImage.color = new Color(bleedingImage.color.r, bleedingImage.color.g, bleedingImage.color.b, 0.3f);
-                    tgm.bleedingText.gameObject.SetActive(false);
-                }
+                // bool bleeding = playerInstance.GetComponent<PlayerH>().GetPoisoned();
+                // if (bleeding)
+                // {
+                //     tgm.bleedingImage.color = new Color(bleedingImage.color.r, bleedingImage.color.g, bleedingImage.color.b, 1f);
+                //     tgm.bleedingText.gameObject.SetActive(true);
+                // }
+                // else if (!bleeding)
+                // {
+                //     tgm.bleedingImage.color = new Color(bleedingImage.color.r, bleedingImage.color.g, bleedingImage.color.b, 0.3f);
+                //     tgm.bleedingText.gameObject.SetActive(false);
+                // }
 
                 /*if (momentum)
                 {

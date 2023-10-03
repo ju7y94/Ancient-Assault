@@ -39,10 +39,9 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void Update()
-    {
+    {   
         Jumping();
         Movement();
-
         controller.Move(playerVelocity * Time.deltaTime);
     }
     

@@ -3,60 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-
-public class AIArcherScript : MonoBehaviour
+public enum ArcherAI { Idle, Alert, Retreat, Death, Patrol };
+    public class Archer : EnemyH
 {
-    EnemyState aiState;
-    NavMeshAgent navAgent;
-    GameObject targetPlayer;
     [SerializeField] GameObject arrow;
-    Animator animator;
-    EnemyScript enemyScript;
-    AudioManager audioManager;
+    ArcherAI enemyAI;
 
-    [SerializeField] LayerMask layerMask;
 
-    float playerDistanceX;
-    float playerDistanceY;
-    float playerDistanceZ;
-    // Start is called before the first frame update
-    void Start()
+    protected override void CheckAIStates()
     {
-        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
-        aiState = EnemyState.Idle;
-        targetPlayer = TheGameManager.GetPlayerInstance();
-        
-        navAgent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
-        enemyScript = GetComponent<EnemyScript>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        CheckAIStates();
-    }
-
-    
-
-    void CheckAIStates()
-    {
-        bool enemyDead = enemyScript.IsDead();
         targetPlayer = GameObject.FindGameObjectWithTag("Player");
-        float distanceToPlayer = Vector3.Distance(transform.position, targetPlayer.transform.position);
-        //print(distanceToPlayer);
+        distanceToPlayer = Vector3.Distance(transform.position, targetPlayer.transform.position);
 
-        if (targetPlayer == null)
-        aiState = EnemyState.Idle;
+        if(targetPlayer != null)
+        playerH = targetPlayer.GetComponent<PlayerH>();
+        else
+        enemyAI = ArcherAI.Idle;
 
-        if (enemyDead)
+        if (isDead)
         {
-            aiState = EnemyState.Death;
+            enemyAI = ArcherAI.Death;
         }
 
-        switch(aiState)
+        switch(enemyAI)
         {
-            case EnemyState.Alert:
+            case ArcherAI.Alert:
             
                 if(targetPlayer != null && distanceToPlayer <= 6f && distanceToPlayer >= 2f)
                 {
@@ -65,20 +36,19 @@ public class AIArcherScript : MonoBehaviour
                     animator.SetBool("attack", true);
                     navAgent.isStopped = true;
                 }
-
                 else if(targetPlayer != null && distanceToPlayer < 2f)
                 {
-                    aiState = EnemyState.Retreat;
+                    enemyAI = ArcherAI.Retreat;
                 }
 
                 if (targetPlayer == null || distanceToPlayer > 6f)
                 {
-                    aiState = EnemyState.Idle;
+                    enemyAI = ArcherAI.Idle;
                     print("Alert to Idle");
                 }
             break;
 
-            case EnemyState.Idle:
+            case ArcherAI.Idle:
 
                 animator.SetBool("walk", false);
                 animator.SetBool("attack", false);
@@ -87,37 +57,37 @@ public class AIArcherScript : MonoBehaviour
 
                 if (targetPlayer != null && distanceToPlayer <= 6f)
                 {
-                    aiState = EnemyState.Alert;
+                    enemyAI = ArcherAI.Alert;
                     print("Idle to Alert");
                 }
             break;
 
-            case EnemyState.Death:
+            case ArcherAI.Death:
 
                 animator.SetBool("die", true);
                 navAgent.isStopped = true;
 
             break;
 
-            case EnemyState.Retreat:
+            case ArcherAI.Retreat:
 
                 animator.SetBool("walk", true);
                 animator.SetBool("attack", false);
                 navAgent.isStopped = false;
-                navAgent.SetDestination(transform.position - Vector3.forward);
+                gameObject.transform.forward = targetPlayer.transform.position - transform.position;
+                navAgent.SetDestination(transform.position + Vector3.back);
 
 
                 if (targetPlayer != null && distanceToPlayer >= 2f)
                 {
-                    aiState = EnemyState.Alert;
+                    enemyAI = ArcherAI.Alert;
                 }            
 
             break;
         }
     }
 
-
-    void ArrowShot()
+    protected virtual void ArrowShot()
     {
         GameObject arrowInstance = Instantiate(arrow, transform.position + Vector3.up / 2, transform.rotation);
         Rigidbody arrowInstanceRB = arrowInstance.GetComponent<Rigidbody>();
@@ -129,10 +99,16 @@ public class AIArcherScript : MonoBehaviour
         
 
     }
-    public void AttackEnd()
+
+    protected override void AttackEnd()
     {
         ArrowShot();
         audioManager.AudioEnemyArrowShot();
     }
+    public override void Damage(float damage)
+    {
+        base.Damage(damage);
+    }
 }
+
 

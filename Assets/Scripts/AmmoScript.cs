@@ -8,15 +8,11 @@ public class AmmoScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        EnemyScript enemyObject = collision.gameObject.GetComponent<EnemyScript>();
-        // if(enemyObject != null)
-        // {
-        //     enemyObject.DealDamage(damageAmount);
-        //     Destroy(gameObject);
-        // }
+        EnemyH enemyObject = collision.gameObject.GetComponent<EnemyH>();
+        
         if(collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "PoisonedEnemy")
         {
-            enemyObject.DealDamage(damageAmount);
+            enemyObject.Damage(damageAmount);
             Destroy(gameObject);
         }
         else if(collision.gameObject.tag == "Platform")

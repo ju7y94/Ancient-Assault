@@ -21,7 +21,7 @@ public class PlayerWeapon : MonoBehaviour
     public bool hasBow, paused, blocking;
 
     PlayerInventory playerInventory;
-    PlayerHealth playerHealth;
+    PlayerH playerH;
     PlayerMovement playerMovement;
 
 
@@ -49,7 +49,7 @@ public class PlayerWeapon : MonoBehaviour
         anim = GetComponent<Animator>();
         audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
         playerInventory = GetComponent<PlayerInventory>();
-        playerHealth = GetComponent<PlayerHealth>();
+        playerH = GetComponent<PlayerH>();
         playerMovement = GetComponent<PlayerMovement>();
     }
 
@@ -119,7 +119,7 @@ public class PlayerWeapon : MonoBehaviour
 
     void Fire()
     {
-        blocking = playerHealth.GetBlocking();
+        blocking = playerH.GetBlocking();
         if (!blocking)
         {
             fireTimer += Time.deltaTime;
@@ -163,42 +163,43 @@ public class PlayerWeapon : MonoBehaviour
         audioManager.AudioPlayerArrowLaunch();
         print(gameObject.transform.position);
     }
+    
     public void SwordHit()
+{
+    RaycastHit[] hits = Physics.SphereCastAll(transform.position, 0.25f, transform.forward, 0.5f);
+    
+    foreach (RaycastHit hit in hits)
     {
-        RaycastHit hit;
-        if (Physics.SphereCast(transform.position + transform.up / 2, 0.3f, transform.forward, out hit, 1.5f))
+        if (hit.transform != null)
         {
-            if (hit.transform != null)
+            if (hit.transform.gameObject.tag == "Enemy" || hit.transform.gameObject.tag == "PoisonedEnemy")
             {
-                if (hit.transform.gameObject.tag == "Enemy" || hit.transform.gameObject.tag == "PoisonedEnemy")
-                {
-                    audioManager.AudioSwordHit();
-                    EnemyScript enemyObject = hit.transform.gameObject.GetComponent<EnemyScript>();
-                    enemyObject.DealDamage(swordDamageToEnemy);
-                }
+                audioManager.AudioSwordHit();
+                EnemyH enemyH = hit.transform.gameObject.GetComponent<EnemyH>();
+                enemyH.Damage(swordDamageToEnemy);
             }
         }
     }
+}
 
     void BlockShield()
     {
         if (!hasBow)
         {
-            PlayerHealth playerHealth = GetComponent<PlayerHealth>();
+            PlayerH playerH = GetComponent<PlayerH>();
             if (Input.GetButtonDown("Fire2") && !paused)
             {
-                playerHealth.Block();
+                playerH.Block();
                 playerMovement.BlockSpeed();
                 anim.SetBool("block", true);
             }
             else if (Input.GetButtonUp("Fire2") && !paused)
             {
-                playerHealth.Block();
+                playerH.Block();
                 playerMovement.DefSpeed();
                 anim.SetBool("block", false);
             }
         }
-
     }
-
 }
+

@@ -15,7 +15,7 @@ public class EnemyArrow : MonoBehaviour
     {
         if(collider.gameObject.tag == "Player")
         {
-            PlayerHealth playerHealth = collider.gameObject.GetComponent<PlayerHealth>();
+            PlayerH playerHealth = collider.gameObject.GetComponent<PlayerH>();
             block = playerHealth.GetBlocking();
             if(!block)
             {

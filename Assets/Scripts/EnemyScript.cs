@@ -51,6 +51,7 @@ public class EnemyScript : MonoBehaviour
     void Update()
     {
         attackTimer += Time.deltaTime;
+        healthBar.transform.forward = GameObject.FindGameObjectWithTag("Player").transform.position - healthBar.transform.position;
     }
 
     public void DealDamage(float damageAmount)
