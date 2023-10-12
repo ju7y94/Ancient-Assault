@@ -6,13 +6,18 @@ TagManager:
   tags:
   - Fire
   - Platform
-  - Enemy
   - Cure
   - PoisonedEnemy
   - Gun
   - AudioManager
   - EnemyManager
   - Boundary
+  - Archer
+  - Warrior
+  - Enemy
+  - Item
+  - Manager
+  - Canvas
   layers:
   - Default
   - TransparentFX
@@ -25,9 +30,9 @@ TagManager:
   - Platform
   - Ammo
   - Player
-  - Enemy
+  - Warrior
   - bullet
-  - 
+  - Archer
   - 
   - 
   - 

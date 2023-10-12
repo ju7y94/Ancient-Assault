@@ -891,11 +891,11 @@ GameObject:
   - component: {fileID: 1698995925331061147}
   - component: {fileID: 1698995925331061145}
   - component: {fileID: 1698995925331061125}
-  - component: {fileID: 2150664534242370039}
   - component: {fileID: 450616194413679680}
+  - component: {fileID: -344991652017749356}
   m_Layer: 11
   m_Name: AIEnemyOOP
-  m_TagString: Enemy
+  m_TagString: Warrior
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -909,7 +909,7 @@ Transform:
   m_GameObject: {fileID: 1969588281301375655}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -45.981724, y: -19.257837, z: 52.73311}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1181723327147116308}
   - {fileID: 850631549094901720}
@@ -965,24 +965,10 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1.77
-  m_BaseOffset: -0.15
+  m_Height: 1.8
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!136 &2150664534242370039
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1969588281301375655}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.3390169
-  m_Height: 1.795125
-  m_Direction: 1
-  m_Center: {x: -0.00096797943, y: 0.884068, z: 0}
 --- !u!114 &450616194413679680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -998,6 +984,26 @@ MonoBehaviour:
   maxHealth: 100
   healthBar: {fileID: 3585787013155305746}
   damageToPlayer: 5
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  enemiesLayerMask:
+  - serializedVersion: 2
+    m_Bits: 2048
+--- !u!64 &-344991652017749356
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969588281301375655}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3236720986300101758, guid: d75689ff18360cd4db389e76cfe68a08, type: 3}
 --- !u!1 &2087256142526416533
 GameObject:
   m_ObjectHideFlags: 0
@@ -2483,7 +2489,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0.05}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 2, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6118551744675961105
 Canvas:
